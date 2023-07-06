@@ -57,4 +57,13 @@ public struct ChatStreamResult: Codable, Equatable {
         self.model = model
         self.choices = choices
     }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.object = try container.decode(String.self, forKey: .object)
+        self.created = try container.decode(TimeInterval.self, forKey: .created)
+        self.model = try container.decode(Model.self, forKey: .model)
+        self.choices = try container.decode([ChatStreamResult.Choice].self, forKey: .choices)
+    }
 }
